@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    background-color: #f0fafc;
+    color: #333;
+    line-height: 1.6;
+}
+
+a {
+    color: #00a5ad;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button {
+    background-color: #00a5ad;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #008b91;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+    width: 100%;
+    padding: 0.6rem;
+    margin: 0.4rem 0;
+    border: 1px solid #ccc;
+    border-radius: 0.3rem;
+    font-size: 1rem;
+    outline: none;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+    border-color: #00a5ad;
+    box-shadow: 0 0 5px rgba(0, 165, 173, 0.2);
+}
+
+.chat-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+#chat-history {
+    display: flex;             /* 縦に並べるため */
+    flex-direction: column;    /* メッセージを上から下へ並べる */
+    gap: 1rem;                 /* メッセージ同士の隙間 */
+    padding: 1rem;
+    /* すでにあるスタイルがあれば調整する */
+}
+
+.message {
+    max-width: 80%;            /* 横幅をある程度に抑える */
+    padding: 0.8rem 1rem;
+    border-radius: 0.5rem;
+    text-align: left;          /* 左寄せ */
+    line-height: 1.5;
+    font-size: 1rem;
+}
+
+/* ユーザーメッセージのスタイル */
+.user-message {
+    align-self: flex-start;    /* 左寄せにする（親が flex コンテナの場合に有効） */
+    background-color: #d0f0c0; /* 明るい緑色など好きな色に */
+    color: #333;               /* 必要に応じて文字色を調整 */
+}
+
+/* AIメッセージのスタイル */
+.ai-message {
+    align-self: flex-start;    /* 左寄せにする */
+    background-color: #f0f0f0; /* 明るいグレーなど好きな色に */
+    color: #333;
+}
+
+.input-area {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f9fdfd;
+}
+
+.input-area input[type="text"] {
+    flex: 1;
+    margin-right: 0.5rem;
+}
+
+.auth-container {
+    max-width: 400px;
+    margin: 3rem auto;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    text-align: center;
+}
+
+.auth-container h2 {
+    margin-bottom: 1.5rem;
+    color: #00a5ad;
+    font-weight: normal;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.auth-container p {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
