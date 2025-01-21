@@ -64,33 +64,30 @@ input[type="email"]:focus {
 }
 
 #chat-history {
-    display: flex;             /* 縦に並べるため */
-    flex-direction: column;    /* メッセージを上から下へ並べる */
-    gap: 1rem;                 /* メッセージ同士の隙間 */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     padding: 1rem;
-    /* すでにあるスタイルがあれば調整する */
 }
 
 .message {
-    max-width: 80%;            /* 横幅をある程度に抑える */
+    max-width: 80%;
     padding: 0.8rem 1rem;
     border-radius: 0.5rem;
-    text-align: left;          /* 左寄せ */
+    text-align: left;
     line-height: 1.5;
     font-size: 1rem;
 }
 
-/* ユーザーメッセージのスタイル */
 .user-message {
-    align-self: flex-start;    /* 左寄せにする（親が flex コンテナの場合に有効） */
-    background-color: #d0f0c0; /* 明るい緑色など好きな色に */
-    color: #333;               /* 必要に応じて文字色を調整 */
+    align-self: flex-start;
+    background-color: #d0f0c0;
+    color: #333;
 }
 
-/* AIメッセージのスタイル */
 .ai-message {
-    align-self: flex-start;    /* 左寄せにする */
-    background-color: #f0f0f0; /* 明るいグレーなど好きな色に */
+    align-self: flex-start;
+    background-color: #f0f0f0;
     color: #333;
 }
 
@@ -136,4 +133,3 @@ input[type="email"]:focus {
     font-size: 0.9rem;
     color: #666;
 }
-
