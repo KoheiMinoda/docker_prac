@@ -6,7 +6,7 @@ class AIHandler:
         openai.api_key = api_key
         
         if not api_key:
-            raise ValueError("OpenAI API キーが設定されていません。")
+            raise ValueError("No, OpenAI API Key")
     
     def get_response(self, user_message):
         try:
@@ -20,13 +20,13 @@ class AIHandler:
             return response.choices[0].message['content']
             
         except RateLimitError:
-            return "申し訳ありません。API利用制限に達しました。しばらく待ってから再度お試しください。"
+            return "Limit of API"
             
         except AuthenticationError:
-            return "APIキーの認証に失敗しました。有効なAPIキーを設定してください。"
+            return "fail to get API key"
             
         except APIError:
-            return "OpenAI APIでエラーが発生しました。しばらく待ってから再度お試しください。"
+            return "OpenAI API error, wait a minute"
             
         except Exception as e:
-            return f"エラーが発生しました: {str(e)}"
+            return f"Error: {str(e)}"
