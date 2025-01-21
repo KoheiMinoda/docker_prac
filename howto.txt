@@ -1,10 +1,12 @@
+minodakohei
+admin
+
 cd english_prac
 docker-compose up --build
 
 -> docker desktopに入る
 -> Containers / App
 -> 右上の CLI を選択するとコマンドが開く
-docker exec -it fd5458a9627cd5387e09fa50a2bfb0d0a164ec2bc24acc772db77e80e7f4a4a7 /bin/sh
 psql -U user -d chatdb
 SELECT * FROM users
 SELECT * FROM conversations
