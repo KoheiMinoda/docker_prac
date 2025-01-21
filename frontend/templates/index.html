@@ -6,14 +6,27 @@
 </head>
 <body>
     <div class="chat-container">
+        <div class="control-panel">
+            <div class="voice-controls">
+                <select id="voice-select" class="voice-select">
+                </select>
+                <button id="toggle-speech" class="toggle-speech">
+                    🔊
+                </button>
+            </div>
+        </div>
         <div id="chat-history">
             <div class="message user-message">hello, AI</div>
             <div class="message ai-message">hello, Human</div>
         </div>
         <div class="input-area">
-            <input type="text" id="user-input" placeholder="メッセージを入力...">
+            <input type="text" id="user-input" placeholder="input message...">
+            <button id="voice-btn" class="voice-btn">
+                <span class="mic-icon">🎤</span>
+            </button>
             <button onclick="sendMessage()">送信</button>
         </div>
+        <div id="voice-status" class="voice-status"></div>
     </div>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
