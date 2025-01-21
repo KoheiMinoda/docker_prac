@@ -239,3 +239,30 @@ input[type="email"]:focus {
 .speak-button:hover {
     opacity: 1;
 }
+
+.user-message .speak-button {
+    left: 5px;
+    right: auto;
+}
+
+.message {
+    position: relative;
+    padding: 10px 30px;
+    margin: 5px 0;
+}
+
+.speak-button {
+    position: absolute;
+    bottom: 5px;
+    padding: 3px 6px;
+    font-size: 12px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+.speak-button:hover {
+    opacity: 1;
+}

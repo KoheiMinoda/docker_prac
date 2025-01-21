@@ -199,3 +199,58 @@ window.addEventListener('beforeunload', function() {
         speechSynthesis.cancel();
     }
 });
+
+function appendMessage(sender, message) {
+    const chatHistory = document.getElementById('chat-history');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${sender}-message`;
+    
+    const messageText = document.createElement('span');
+    messageText.textContent = message;
+    messageDiv.appendChild(messageText);
+    
+    const speakButton = document.createElement('button');
+    speakButton.className = 'speak-button';
+    speakButton.innerHTML = '🔊';
+    speakButton.onclick = () => speakText(message);
+    messageDiv.appendChild(speakButton);
+    
+    if (autoSpeak) {
+        if (sender === 'ai') {
+            speakText(message);
+        }
+    }
+    
+    chatHistory.appendChild(messageDiv);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
+async function sendMessage() {
+    const input = document.getElementById('user-input');
+    const message = input.value;
+    if (!message) return;
+
+    appendMessage('user', message);
+    if (autoSpeak) {
+        speakText(message);
+    }
+    
+    input.value = '';
+
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message })
+        });
+
+        const data = await response.json();
+
+        appendMessage('ai', data.response);
+    } catch (error) {
+        console.error('Error:', error);
+        appendMessage('ai', 'Sorry, an error occurred.');
+    }
+}
