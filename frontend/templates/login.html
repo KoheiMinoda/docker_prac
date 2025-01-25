@@ -2,40 +2,68 @@
 <html>
 <head>
     <title>Login - AI English Conversation</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <div class="auth-container">
         <h2>Login</h2>
-        <form id="login-form">
-            <div class="form-group">
-                <input type="text" id="username" placeholder="Username" required>
-            </div>
-            <div class="form-group">
-                <input type="password" id="password" placeholder="Password" required>
-            </div>
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+        <div class="auth-methods">
+            <!-- メールアドレスでのログイン -->
+            <form id="email-login-form" class="auth-form">
+                <div class="form-group">
+                    <input type="email" id="login-email" placeholder="メールアドレス" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-password" placeholder="パスワード" required>
+                </div>
+                <button type="submit" class="auth-button">ログイン</button>
+            </form>
+
+            <!-- Googleでのログイン -->
+            <div class="auth-divider">または</div>
+            <button id="google-login" class="auth-button google-button">
+                <img src="/static/images/google-icon.png" alt="Google">
+                Googleでログイン
+            </button>
+        </div>
+
+        <div class="auth-links">
+            <a href="/register">アカウントをお持ちでない方は登録</a>
+            <a href="/reset-password">パスワードをお忘れの方</a>
+        </div>
     </div>
-    <script>
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
+
+    <script type="module">
+        import { auth } from '/static/js/firebase.js';
+        import { 
+            signInWithEmailAndPassword, 
+            signInWithPopup, 
+            GoogleAuthProvider 
+        } from 'firebase/auth';
+
+        const provider = new GoogleAuthProvider();
+
+        // メールアドレスでのログイン
+        document.getElementById('email-login-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const response = await fetch('/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: document.getElementById('username').value,
-                    password: document.getElementById('password').value
-                })
-            });
-            const data = await response.json();
-            if (data.success) {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
                 window.location.href = '/';
-            } else {
-                alert(data.message || 'Login failed');
+            } catch (error) {
+                alert('ログインに失敗しました: ' + error.message);
+            }
+        });
+
+        // Googleでのログイン
+        document.getElementById('google-login').addEventListener('click', async () => {
+            try {
+                await signInWithPopup(auth, provider);
+                window.location.href = '/';
+            } catch (error) {
+                alert('Googleログインに失敗しました: ' + error.message);
             }
         });
     </script>

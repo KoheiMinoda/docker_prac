@@ -2,44 +2,84 @@
 <html>
 <head>
     <title>Register - AI English Conversation</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
     <div class="auth-container">
-        <h2>Register</h2>
-        <form id="register-form">
-            <div class="form-group">
-                <input type="text" id="username" placeholder="Username" required>
-            </div>
-            <div class="form-group">
-                <input type="email" id="email" placeholder="Email" required>
-            </div>
-            <div class="form-group">
-                <input type="password" id="password" placeholder="Password" required>
-            </div>
-            <button type="submit">Register</button>
-        </form>
-        <p>Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+        <h2>ユーザー登録</h2>
+        <div class="auth-methods">
+            <!-- メールアドレスでの登録 -->
+            <form id="email-register-form" class="auth-form">
+                <div class="form-group">
+                    <input type="text" id="register-username" placeholder="ユーザー名" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="register-email" placeholder="メールアドレス" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="register-password" placeholder="パスワード" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="register-password-confirm" placeholder="パスワード（確認）" required>
+                </div>
+                <button type="submit" class="auth-button">登録</button>
+            </form>
+
+            <!-- Googleでの登録 -->
+            <div class="auth-divider">または</div>
+            <button id="google-register" class="auth-button google-button">
+                <img src="/static/images/google-icon.png" alt="Google">
+                Googleで登録
+            </button>
+        </div>
+
+        <div class="auth-links">
+            <a href="/login">すでにアカウントをお持ちの方はログイン</a>
+        </div>
     </div>
-    <script>
-        document.getElementById('register-form').addEventListener('submit', async (e) => {
+
+    <script type="module">
+        import { auth } from '/static/js/firebase.js';
+        import { 
+            createUserWithEmailAndPassword,
+            signInWithPopup,
+            GoogleAuthProvider,
+            updateProfile
+        } from 'firebase/auth';
+
+        const provider = new GoogleAuthProvider();
+
+        // メールアドレスでの登録
+        document.getElementById('email-register-form').addEventListener('submit', async (e) => {
             e.preventDefault();
-            const response = await fetch('/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    username: document.getElementById('username').value,
-                    email: document.getElementById('email').value,
-                    password: document.getElementById('password').value
-                })
-            });
-            const data = await response.json();
-            if (data.success) {
-                window.location.href = '/login';
-            } else {
-                alert(data.message || 'Registration failed');
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const passwordConfirm = document.getElementById('register-password-confirm').value;
+
+            if (password !== passwordConfirm) {
+                alert('パスワードが一致しません');
+                return;
+            }
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                await updateProfile(userCredential.user, {
+                    displayName: username
+                });
+                window.location.href = '/';
+            } catch (error) {
+                alert('登録に失敗しました: ' + error.message);
+            }
+        });
+
+        // Googleでの登録
+        document.getElementById('google-register').addEventListener('click', async () => {
+            try {
+                await signInWithPopup(auth, provider);
+                window.location.href = '/';
+            } catch (error) {
+                alert('Google登録に失敗しました: ' + error.message);
             }
         });
     </script>
