@@ -10,5 +10,6 @@ docker-compose up --build
 -> CLI を選択するとコマンドが開く
 psql -U user -d chatdb
 \dt
-SELECT * FROM users
-SELECT * FROM conversations
+SELECT * FROM users;
+SELECT * FROM conversations;
+\d users
