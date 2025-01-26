@@ -6,7 +6,9 @@ docker-compose up --build
 
 -> docker desktopに入る
 -> Containers / App
--> 右上の CLI を選択するとコマンドが開く
+-> english_prac_db_1 を選択
+-> CLI を選択するとコマンドが開く
 psql -U user -d chatdb
+\dt
 SELECT * FROM users
 SELECT * FROM conversations
