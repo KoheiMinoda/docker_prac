@@ -98,21 +98,16 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// 既存のコードに追加
-
 let speechSynthesis = window.speechSynthesis;
 let voices = [];
 let autoSpeak = false;
 
-// 音声合成の初期化
 function initSpeechSynthesis() {
-    // 利用可能な音声を取得
     function loadVoices() {
         voices = speechSynthesis.getVoices();
         const voiceSelect = document.getElementById('voice-select');
         voiceSelect.innerHTML = '';
         
-        // 英語の音声のみをフィルタリング
         const englishVoices = voices.filter(voice => voice.lang.startsWith('en'));
         
         englishVoices.forEach((voice, index) => {
@@ -123,14 +118,12 @@ function initSpeechSynthesis() {
         });
     }
 
-    // 音声リストの読み込み
     loadVoices();
     if (speechSynthesis.onvoiceschanged !== undefined) {
         speechSynthesis.onvoiceschanged = loadVoices;
     }
 }
 
-// テキストを音声で読み上げる
 function speakText(text) {
     if (speechSynthesis.speaking) {
         speechSynthesis.cancel();
